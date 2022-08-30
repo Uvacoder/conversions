@@ -12,5 +12,5 @@ input {
 }
 
 .currency-input {
-  @apply px-6 py-2 rounded-lg min-h-[60px] w-full;
+  @apply px-6 py-2 rounded-lg min-h-[60px] w-full text-xl;
 }

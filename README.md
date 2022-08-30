@@ -1,3 +1,10 @@
+# Инструкция
+
+```bash
+npm i
+npm run dev
+```
+
 # Стек
 
 - React
