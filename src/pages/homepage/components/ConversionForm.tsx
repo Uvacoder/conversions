@@ -10,6 +10,7 @@ import useConversionForm, {
   ConversionFormType,
 } from '../hooks/useConversionForm';
 import BasicPanel from '@components/common/InfoPanel/BasicPanel';
+import LoadingPanel from '@components/common/InfoPanel/LoadingPanel';
 
 const ConversionForm = () => {
   const {
@@ -19,12 +20,13 @@ const ConversionForm = () => {
     handleValueChange,
     handleCurrencyChange,
     error,
+    isLoading,
     swapCurrencies,
     convertCurrencies,
   } = useConversionForm();
 
   return (
-    <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-2xl mb-10">
+    <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-2xl mb-4">
       <div className="flex flex-col gap-2 md:flex-row items-stretch lg:space-between w-full mb-4">
         <div className="w-full md:max-w-[30%]">
           <InputTitle>Сумма</InputTitle>
@@ -57,7 +59,9 @@ const ConversionForm = () => {
           </div>
         </div>
       </div>
-      {from.value !== 0 && to.value !== 0 ? (
+      {isLoading ? (
+        <LoadingPanel />
+      ) : from.value !== 0 && to.value !== 0 ? (
         <ExchangeRatePanel from={from} to={to} options={currencies} />
       ) : null}
       {error !== '' && (

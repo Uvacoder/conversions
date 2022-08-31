@@ -8,6 +8,7 @@ import { convertFromCurrency, getCurrenciesList } from '../API';
 export default function useConversionForm() {
   const [currencies, setCurrencies] = useState({});
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const [fromValue, setFromValue] = useState(0);
   const debouncedValue = useDebounce(fromValue);
@@ -29,12 +30,14 @@ export default function useConversionForm() {
       if (sessionData) {
         return getUserCurrencyData(JSON.parse(sessionData));
       }
+      setIsLoading(true);
       return getCountriesToCurrencyMapping()
         .then(({ data }) => {
           sessionStorage.setItem('countriesToCurrency', JSON.stringify(data));
           getUserCurrencyData(data);
         })
-        .catch((e: AxiosError) => setError(e.message));
+        .catch((e: AxiosError) => setError(e.message))
+        .finally(() => setIsLoading(false));
     }
     // Список валют
     function getCurrencies() {
@@ -42,6 +45,7 @@ export default function useConversionForm() {
       if (sessionData) {
         return setCurrencies(JSON.parse(sessionData));
       }
+      setIsLoading(true);
       return getCurrenciesList()
         .then(
           ({
@@ -53,7 +57,8 @@ export default function useConversionForm() {
             setCurrencies(fiats);
           }
         )
-        .catch((e: AxiosError) => setError(e.message));
+        .catch((e: AxiosError) => setError(e.message))
+        .finally(() => setIsLoading(false));
     }
     getUserCountryCurrency();
     getCurrencies();
@@ -66,6 +71,7 @@ export default function useConversionForm() {
 
   const convertCurrencies = () => {
     if (fromValue === 0) return;
+    setIsLoading(true);
     return convertFromCurrency({
       to: toCurrency,
       from: fromCurrency,
@@ -74,7 +80,8 @@ export default function useConversionForm() {
       .then(({ data }) =>
         setToValue(Number.parseFloat(data.new_amount.toFixed(2)))
       )
-      .catch((e: AxiosError) => setError(e.message));
+      .catch((e: AxiosError) => setError(e.message))
+      .finally(() => setIsLoading(false));
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +119,7 @@ export default function useConversionForm() {
     error,
     from: { value: fromValue, currency: fromCurrency },
     to: { value: toValue, currency: toCurrency },
+    isLoading,
   };
 }
 
@@ -126,5 +134,6 @@ export type ConversionFormType = {
     from: currencyType;
     to: currencyType;
   };
+  isLoading: boolean;
   options: { [name in string]: { currency_name: string } };
 };
