@@ -11,7 +11,7 @@ export default function ExternalLink({
 }) {
   return (
     <a href={href} target="_blank" rel="noreferrer noopener">
-      <div className="flex items-center border-b border-b-blue-700 text-blue-700">
+      <div className="flex items-center gap-1 border-b border-b-blue-700 text-blue-700">
         {children}
         {showIcon && <ExternalLinkIcon />}
       </div>

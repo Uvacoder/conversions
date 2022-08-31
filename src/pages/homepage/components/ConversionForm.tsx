@@ -37,7 +37,7 @@ const ConversionForm = () => {
             _ref={ref}
           />
         </div>
-        <div className="flex flex-col items-stretch xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">
+        <div className="flex flex-col items-stretch 3xs:items-stretch 3xs:flex-row w-full md:max-w-[70%] gap-2">
           <div>
             <InputTitle>Из</InputTitle>
             <SelectCurrency
