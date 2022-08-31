@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getCountriesToCurrencyMapping } from '../API/countries';
 import { useDebounce } from '@hooks';
 import { getCountryFromLocale } from '../utils';
@@ -68,7 +68,7 @@ export default function useConversionForm() {
   }, []);
 
   useEffect(() => {
-    if (debouncedValue === 0) return;
+    if (debouncedValue === 0 && !isLoading) return;
     convertCurrencies();
   }, [debouncedValue, toCurrency, fromCurrency]);
 
@@ -87,25 +87,31 @@ export default function useConversionForm() {
       .finally(() => setIsLoading(false));
   };
 
-  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    try {
-      const numberValue =
-        value === '' || Number.isNaN(value)
-          ? 0
-          : Number.parseFloat(Number.parseFloat(value).toFixed(2));
-      return setFromValue(numberValue);
-    } catch {
-      return;
-    }
-  };
-  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, name } = e.target;
-    if (name === 'from') {
-      return setFromCurrency(value);
-    }
-    return setToCurrency(value);
-  };
+  const handleValueChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target;
+      try {
+        const numberValue =
+          value === '' || Number.isNaN(value)
+            ? 0
+            : Number.parseFloat(Number.parseFloat(value).toFixed(2));
+        return setFromValue(numberValue);
+      } catch {
+        return;
+      }
+    },
+    []
+  );
+  const handleCurrencyChange = useCallback(
+    (e: React.ChangeEvent<HTMLSelectElement>) => {
+      const { value, name } = e.target;
+      if (name === 'from') {
+        return setFromCurrency(value);
+      }
+      return setToCurrency(value);
+    },
+    []
+  );
 
   const swapCurrencies = () => {
     const from = { fromCurrency };
