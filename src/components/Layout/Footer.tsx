@@ -11,7 +11,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex gap-4 ">
-          <ExternalLink href="https://github.com/ilyasudakov">
+          <ExternalLink href="https://github.com/ilyasudakov/conversion-test-task-DS">
             Github
           </ExternalLink>
           <ExternalLink href="https://ilyasudakov.vercel.app">

@@ -35,7 +35,7 @@ const ConversionForm = () => {
             options={currencies}
           />
         </div>
-        <div className="flex flex-col items-center xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">
+        <div className="flex flex-col items-stretch xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">
           <div>
             <InputTitle>Из</InputTitle>
             <SelectCurrency

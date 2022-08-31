@@ -6,7 +6,7 @@
 :root {
   min-height: 100vh;
   font-family: 'Open Sans', sans-serif;
-  @apply bg-gradient-to-b from-indigo-900 to-cyan-800 text-stone-900;
+  @apply bg-gradient-to-b from-indigo-100 to-cyan-100 text-stone-900;
 }
 
 html,
