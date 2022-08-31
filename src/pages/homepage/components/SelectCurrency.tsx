@@ -9,7 +9,7 @@ const SelectCurrency = ({
   value: string;
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   type: string;
-  options: { [name in string]: string };
+  options: { [name in string]: { currency_name: string } };
 }) => {
   return (
     <select
@@ -19,7 +19,10 @@ const SelectCurrency = ({
       name={type}
     >
       {Object.entries(options).map(([code, currency]) => (
-        <option key={code} value={code}>{`${code} - ${currency}`}</option>
+        <option
+          key={code}
+          value={code}
+        >{`${code} - ${currency.currency_name}`}</option>
       ))}
     </select>
   );

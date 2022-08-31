@@ -101,12 +101,11 @@ const ExchangeRatePanel = ({
       <div className="mr-auto font-bold text-stone-500 tracking-wide">{`${formatNumberByCurrency(
         from.value,
         from.currency
-      )} ${options[from.currency]} =`}</div>
-
+      )} ${options[from.currency].currency_name} =`}</div>
       <div className="mr-auto text-xl font-bold tracking-wide">{`${formatNumberByCurrency(
         to.value,
         to.currency
-      )} ${options[to.currency]}`}</div>
+      )} ${options[to.currency].currency_name}`}</div>
       <ExchangeRateCurrency left={from} right={to} />
       <ExchangeRateCurrency left={to} right={from} />
     </>

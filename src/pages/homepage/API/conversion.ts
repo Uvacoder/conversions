@@ -1,16 +1,24 @@
 import makeRequest from '@API';
 
 const config = {
-  url: {
-    baseUrl: import.meta.env.VITE_CURRENCY_API_URL,
+  headers: {
+    'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_API_KEY,
   },
 };
 
+type CurrenciesListType = {
+  response: { fiats: { [i in string]: { currency_name: string } } };
+};
 export const getCurrenciesList = () => {
-  return makeRequest<{ currencies: { [i in string]: string } }>({
-    ...config,
-    headers: { apikey: import.meta.env.VITE_CURRENCY_API_KEY },
-    url: { ...config.url, path: 'list' },
+  return makeRequest<CurrenciesListType>({
+    url: {
+      baseUrl: 'https://currencyscoop.p.rapidapi.com',
+      path: 'currencies',
+    },
+    headers: {
+      ...config.headers,
+      'X-RapidAPI-Host': import.meta.env.VITE_RAPIDAPI_API_CURRENCYSCOOP_HOST,
+    },
   });
 };
 
@@ -25,7 +33,7 @@ export const convertFromCurrency = (params: {
       path: 'convertcurrency',
     },
     headers: {
-      'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_API_KEY,
+      ...config.headers,
       'X-RapidAPI-Host': import.meta.env.VITE_RAPIDAPI_API_NINJAS_HOST,
     },
     params: { have: params.from, want: params.to, amount: params.amount },

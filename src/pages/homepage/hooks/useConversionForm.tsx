@@ -43,10 +43,16 @@ export default function useConversionForm() {
         return setCurrencies(JSON.parse(sessionData));
       }
       return getCurrenciesList()
-        .then(({ data: { currencies } }) => {
-          sessionStorage.setItem('currencies', JSON.stringify(currencies));
-          setCurrencies(currencies);
-        })
+        .then(
+          ({
+            data: {
+              response: { fiats },
+            },
+          }) => {
+            sessionStorage.setItem('currencies', JSON.stringify({}));
+            setCurrencies(fiats);
+          }
+        )
         .catch((e: AxiosError) => setError(e.message));
     }
     getUserCountryCurrency();
@@ -120,5 +126,5 @@ export type ConversionFormType = {
     from: currencyType;
     to: currencyType;
   };
-  options: { [name in string]: string };
+  options: { [name in string]: { currency_name: string } };
 };
