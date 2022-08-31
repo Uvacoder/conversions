@@ -25,7 +25,6 @@ export default function useConversionForm() {
     }
     // Хеш таблица с отображением стран на валюту
     function getUserCountryCurrency() {
-      console.log('fetching countries to currencies list');
       const sessionData = sessionStorage.getItem('countriesToCurrency');
       if (sessionData) {
         return getUserCurrencyData(JSON.parse(sessionData));
@@ -35,13 +34,10 @@ export default function useConversionForm() {
           sessionStorage.setItem('countriesToCurrency', JSON.stringify(data));
           getUserCurrencyData(data);
         })
-        .catch((e: AxiosError) => {
-          setError(e.message);
-        });
+        .catch((e: AxiosError) => setError(e.message));
     }
     // Список валют
     function getCurrencies() {
-      console.log('fetching currencies');
       const sessionData = sessionStorage.getItem('currencies');
       if (sessionData) {
         return setCurrencies(JSON.parse(sessionData));
@@ -51,9 +47,7 @@ export default function useConversionForm() {
           sessionStorage.setItem('currencies', JSON.stringify(currencies));
           setCurrencies(currencies);
         })
-        .catch((e: AxiosError) => {
-          setError(e.message);
-        });
+        .catch((e: AxiosError) => setError(e.message));
     }
     getUserCountryCurrency();
     getCurrencies();
@@ -61,7 +55,6 @@ export default function useConversionForm() {
 
   useEffect(() => {
     if (debouncedValue === 0) return;
-    console.log('converting currencies - debounced');
     convertCurrencies();
   }, [debouncedValue, toCurrency, fromCurrency]);
 
@@ -72,12 +65,10 @@ export default function useConversionForm() {
       from: fromCurrency,
       amount: fromValue,
     })
-      .then(({ data }) => {
-        setToValue(Number.parseFloat(data.new_amount.toFixed(2)));
-      })
-      .catch((e: AxiosError) => {
-        setError(e.message);
-      });
+      .then(({ data }) =>
+        setToValue(Number.parseFloat(data.new_amount.toFixed(2)))
+      )
+      .catch((e: AxiosError) => setError(e.message));
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +103,7 @@ export default function useConversionForm() {
     convertCurrencies,
     handleCurrencyChange,
     currencies,
+    error,
     from: { value: fromValue, currency: fromCurrency },
     to: { value: toValue, currency: toCurrency },
   };
@@ -122,6 +114,7 @@ export type ConversionFormType = {
   handleValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCurrencyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   onSubmit: () => void;
+  error: string;
   swapCurrencies: () => void;
   currency: {
     from: currencyType;

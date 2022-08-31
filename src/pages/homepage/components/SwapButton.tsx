@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ReactComponent as SwapIcon } from '../../../assets/swap-horizontal.svg';
 
 const ICON_SIZE = 20;
@@ -13,4 +14,4 @@ const SwapButton = ({ onSwap }: { onSwap: () => void }) => {
   );
 };
 
-export default SwapButton;
+export default memo(SwapButton);

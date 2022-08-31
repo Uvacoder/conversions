@@ -1,11 +1,15 @@
+import Button from '@components/common/Button';
+import ErrorInfoPanel from '@components/common/InfoPanel/ErrorPanel';
+
 import { formatNumber, formatNumberByCurrency } from '../utils';
-import Button from '../../../components/common/Button';
 import CurrencyInput from './CurrencyInput';
 import SelectCurrency from './SelectCurrency';
 import SwapButton from './SwapButton';
+
 import useConversionForm, {
   ConversionFormType,
 } from '../hooks/useConversionForm';
+import BasicPanel from '@components/common/InfoPanel/BasicPanel';
 
 const ConversionForm = () => {
   const {
@@ -14,6 +18,7 @@ const ConversionForm = () => {
     currencies,
     handleValueChange,
     handleCurrencyChange,
+    error,
     swapCurrencies,
     convertCurrencies,
   } = useConversionForm();
@@ -55,7 +60,20 @@ const ConversionForm = () => {
       {from.value !== 0 && to.value !== 0 ? (
         <ExchangeRatePanel from={from} to={to} options={currencies} />
       ) : null}
-      <ExchangeRateInfoPanel />
+      {error !== '' && (
+        <ErrorInfoPanel>{`Произошла ошибка: ${error}`}</ErrorInfoPanel>
+      )}
+      <BasicPanel>
+        Актуальный курс валют от Банка России вы можете{' '}
+        <a
+          className="text-blue-700"
+          target="_blank"
+          rel="noreferrer noopener"
+          href="https://www.cbr.ru/currency_base/daily/"
+        >
+          проверить здесь.
+        </a>
+      </BasicPanel>
       <Button className="ml-auto" onClick={convertCurrencies}>
         Конвертировать
       </Button>
@@ -108,21 +126,5 @@ const ExchangeRateCurrency = ({
         ? formatNumber(right.value / left.value)
         : 'x'
     } ${right.currency}`}</div>
-  );
-};
-
-const ExchangeRateInfoPanel = () => {
-  return (
-    <div className="mr-auto bg-blue-50 px-4 py-2 text-sm rounded-lg">
-      Актуальный курс валют от Банка России вы можете{' '}
-      <a
-        className="text-blue-700"
-        target="_blank"
-        rel="noreferrer noopener"
-        href="https://www.cbr.ru/currency_base/daily/"
-      >
-        проверить здесь.
-      </a>
-    </div>
   );
 };
