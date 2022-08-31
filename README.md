@@ -20,7 +20,6 @@ npm i
 VITE_RAPIDAPI_API_KEY=ВАШ_RAPID_API_КЛЮЧ
 VITE_RAPIDAPI_API_NINJAS_HOST=currency-converter-by-api-ninjas.p.rapidapi.com
 VITE_RAPIDAPI_API_CURRENCYSCOOP_HOST=currencyscoop.p.rapidapi.com
-
 ```
 
 Затем выполнить:

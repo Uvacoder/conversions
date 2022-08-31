@@ -9,7 +9,7 @@ export default function Footer() {
       >
         <div className="flex flex-col md:flex-row gap-2 md:items-center">
           <div className="text-stone-700">Илья Судаков - @ilyasudakov</div>
-          <div className="text-stone-500 bg-stone-100 px-4 py-2 rounded-lg text-sm">
+          <div className="text-stone-600 bg-stone-100 px-4 py-2 rounded-lg text-sm">
             React разработчик, Санкт-Петербург
           </div>
         </div>
