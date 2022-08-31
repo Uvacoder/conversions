@@ -16,37 +16,36 @@ const CurrencyForm = ({
   const isFromCurrency = type === 'from';
   return (
     <FormItem>
-      <div className="text-stone-300 px-3 py-1 text-xl">
-        {isFromCurrency ? 'Из' : 'В'}
-      </div>
-      <div
-        className="flex flex-col md:flex-row 
-      items-center bg-black rounded-lg border border-stone-500 z-100 relative"
-      >
-        <input
-          type="number"
-          name={type}
-          value={isFromCurrency ? `${value}` : value === 0 ? '' : value}
-          onChange={handleValueChange}
-          className="currency-input pr-[280px]"
-          placeholder={
-            isFromCurrency ? 'Введите валюту...' : 'Тут будет результат...'
-          }
-          disabled={!isFromCurrency}
-        />
-        <SelectCurrency
-          value={currency}
-          onChange={handleCurrencyChange}
-          name={type}
-          options={options}
-        />
-      </div>
+      <input
+        type="number"
+        name={type}
+        value={isFromCurrency ? `${value}` : value === 0 ? '' : value}
+        onChange={handleValueChange}
+        className="currency-input pr-[280px]"
+        placeholder={
+          isFromCurrency ? 'Введите валюту...' : 'Тут будет результат...'
+        }
+        disabled={!isFromCurrency}
+      />
+      <SelectCurrency
+        value={currency}
+        onChange={handleCurrencyChange}
+        name={type}
+        options={options}
+      />
     </FormItem>
   );
 };
 
 const FormItem = ({ children }: { children: React.ReactNode }) => {
-  return <div className="flex flex-col w-full max-w-1/2 ">{children}</div>;
+  return (
+    <div
+      className="flex flex-col w-full max-w-1/2 md:flex-row 
+  items-center bg-black rounded-lg border border-stone-500 z-100 relative"
+    >
+      {children}
+    </div>
+  );
 };
 
 export default CurrencyForm;

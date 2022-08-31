@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { convertFromCurrency } from '../../api';
 import { getCountriesToCurrencyMapping } from '../../api/countries';
 import useDebounce from '../../hooks/useDebounce';
+import { getCountryFromLocale } from '../../utils';
 
 export default function useConversionForm() {
   const [currencies, setCurrencies] = useState([]);
@@ -10,14 +11,26 @@ export default function useConversionForm() {
   const [fromCurrency, setFromCurrency] = useState('RUB');
 
   const [toValue, setToValue] = useState(0);
-  const [toCurrency, setToCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('EUR');
 
   useEffect(() => {
-    console.log('fetching currencies list');
-    getCountriesToCurrencyMapping().then(({ data }) => {
-      console.log(data);
-      // setCurrencies(currencies);
-    });
+    function getUserCurrencyData(data: { [i in string]: string }) {
+      const locale = window.navigator.language;
+      const currency = getCountryFromLocale(locale, data);
+      setFromCurrency(currency);
+    }
+    function getUserCountryCurrency() {
+      console.log('fetching currencies list');
+      const sessionData = sessionStorage.getItem('countriesToCurrency');
+      if (sessionData) {
+        return getUserCurrencyData(JSON.parse(sessionData));
+      }
+      return getCountriesToCurrencyMapping().then(({ data }) => {
+        sessionStorage.setItem('countriesToCurrency', JSON.stringify(data));
+        getUserCurrencyData(data);
+      });
+    }
+    getUserCountryCurrency();
   }, []);
 
   useEffect(() => {
