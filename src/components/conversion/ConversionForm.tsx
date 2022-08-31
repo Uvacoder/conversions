@@ -1,4 +1,4 @@
-import { formatNumberByCurrency } from '../../utils';
+import { formatNumber, formatNumberByCurrency } from '../../utils';
 import Button from '../common/Button';
 import CurrencyInput from './CurrencyInput';
 import SelectCurrency from './SelectCurrency';
@@ -50,24 +50,30 @@ const ConversionForm = ({
           />
         </div>
       </div>
-      {to.value > 0 ? (
-        <div className="mr-auto font-bold tracking-wide">{`${formatNumberByCurrency(
-          from.value,
-          from.currency
-        )} ${from.currency} =`}</div>
+      {from.value !== 0 && to.value !== 0 ? (
+        <>
+          <div className="mr-auto font-bold text-stone-500 tracking-wide">{`${formatNumberByCurrency(
+            from.value,
+            from.currency
+          )} ${options[from.currency]} =`}</div>
+
+          <div className="mr-auto text-xl font-bold tracking-wide">{`${formatNumberByCurrency(
+            to.value,
+            to.currency
+          )} ${options[to.currency]}`}</div>
+          <div className="mr-auto -mb-1">{`1 ${from.currency} = ${
+            to.value !== 0 && from.value !== 0
+              ? formatNumber(to.value / from.value)
+              : 'x'
+          } ${to.currency}`}</div>
+          <div className="mr-auto">{`1 ${to.currency} = ${
+            to.value !== 0 && from.value !== 0
+              ? formatNumber(from.value / to.value)
+              : 'x'
+          } ${from.currency}`}</div>
+        </>
       ) : null}
-      {to.value > 0 ? (
-        <div className="mr-auto text-xl font-bold tracking-wide">{`${formatNumberByCurrency(
-          to.value,
-          to.currency
-        )} ${to.currency}`}</div>
-      ) : null}
-      <div className="mr-auto -mb-1">{`1 ${from.currency} = ${
-        to.value !== 0 && from.value !== 0 ? to.value / from.value : 'x'
-      } ${to.currency}`}</div>
-      <div className="mr-auto">{`1 ${to.currency} = ${
-        to.value !== 0 && from.value !== 0 ? from.value / to.value : 'x'
-      } ${from.currency}`}</div>
+      <ExchangeRateInfoPanel />
       <Button className="ml-auto" onClick={onSubmit}>
         Конвертировать
       </Button>
@@ -76,3 +82,19 @@ const ConversionForm = ({
 };
 
 export default ConversionForm;
+
+const ExchangeRateInfoPanel = () => {
+  return (
+    <div className="mr-auto bg-blue-50 px-4 py-1 text-sm rounded-lg">
+      Актуальный курс валют от Банка России вы можете{' '}
+      <a
+        className="text-blue-700"
+        target="_blank"
+        rel="noreferrer noopener"
+        href="https://www.cbr.ru/currency_base/daily/"
+      >
+        проверить здесь.
+      </a>
+    </div>
+  );
+};

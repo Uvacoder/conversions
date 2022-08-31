@@ -13,7 +13,24 @@ export const getCountryFromLocale = (
 };
 
 export const formatNumberByCurrency = (number: number, currency: string) => {
-  const outputOptions = { style: 'currency', currency };
+  const outputOptions = {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  };
+  const numberFormat = new Intl.NumberFormat(
+    window.navigator.language,
+    outputOptions
+  );
+  return numberFormat.format(number);
+};
+
+export const formatNumber = (number: number) => {
+  const outputOptions = {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  };
   const numberFormat = new Intl.NumberFormat(
     window.navigator.language,
     outputOptions

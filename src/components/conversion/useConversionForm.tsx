@@ -10,7 +10,7 @@ export default function useConversionForm() {
   const debouncedValue = useDebounce(fromValue);
   const [fromCurrency, setFromCurrency] = useState('RUB');
 
-  const [toValue, setToValue] = useState(5000);
+  const [toValue, setToValue] = useState(0);
   const [toCurrency, setToCurrency] = useState('EUR');
 
   useEffect(() => {
@@ -37,18 +37,17 @@ export default function useConversionForm() {
     if (debouncedValue === 0) return;
     console.log('converting currencies - debounced');
     convertCurrencies();
-  }, [debouncedValue]);
+  }, [debouncedValue, toCurrency, fromCurrency]);
 
   const convertCurrencies = () => {
-    if (toValue === 0) return;
-    console.log('converting currencies');
-    // return convertFromCurrency({
-    //   to: toCurrency,
-    //   from: fromCurrency,
-    //   amount: fromValue,
-    // }).then(({ data }) => {
-    //   setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
-    // });
+    if (fromValue === 0) return;
+    return convertFromCurrency({
+      to: toCurrency,
+      from: fromCurrency,
+      amount: fromValue,
+    }).then(({ data }) => {
+      setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
+    });
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +74,6 @@ export default function useConversionForm() {
     const from = { fromCurrency };
     setFromCurrency(toCurrency);
     setToCurrency(from.fromCurrency);
-    convertCurrencies();
   };
 
   return {
