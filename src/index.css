@@ -22,4 +22,10 @@ input {
 
 .currency-input {
   @apply px-4 py-2 rounded-lg w-full;
+  -moz-appearance: textfield;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }

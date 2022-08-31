@@ -23,6 +23,7 @@ const ConversionForm = () => {
     isLoading,
     swapCurrencies,
     convertCurrencies,
+    ref,
   } = useConversionForm();
 
   return (
@@ -33,8 +34,7 @@ const ConversionForm = () => {
           <CurrencyInput
             data={from}
             handleValueChange={handleValueChange}
-            handleCurrencyChange={handleCurrencyChange}
-            options={currencies}
+            _ref={ref}
           />
         </div>
         <div className="flex flex-col items-stretch xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">

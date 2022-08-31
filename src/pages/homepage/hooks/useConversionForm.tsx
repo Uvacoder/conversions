@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getCountriesToCurrencyMapping } from '../API/countries';
 import { useDebounce } from '@hooks';
 import { getCountryFromLocale } from '../utils';
@@ -16,6 +16,8 @@ export default function useConversionForm() {
 
   const [toValue, setToValue] = useState(0);
   const [toCurrency, setToCurrency] = useState('EUR');
+
+  const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Сохранить данные о стране пользователя при загрузке
@@ -60,6 +62,7 @@ export default function useConversionForm() {
         .catch((e: AxiosError) => setError(e.message))
         .finally(() => setIsLoading(false));
     }
+    ref.current?.focus();
     getUserCountryCurrency();
     getCurrencies();
   }, []);
@@ -120,6 +123,7 @@ export default function useConversionForm() {
     from: { value: fromValue, currency: fromCurrency },
     to: { value: toValue, currency: toCurrency },
     isLoading,
+    ref,
   };
 }
 
@@ -134,6 +138,7 @@ export type ConversionFormType = {
     from: currencyType;
     to: currencyType;
   };
+  ref: React.RefObject<HTMLInputElement>;
   isLoading: boolean;
   options: { [name in string]: { currency_name: string } };
 };
