@@ -10,7 +10,7 @@ export default function ExternalLink({
   showIcon?: boolean;
 }) {
   return (
-    <a href={href}>
+    <a href={href} target="_blank" rel="noreferrer noopener">
       <div className="flex items-center border-b border-b-blue-700 text-blue-700">
         {children}
         {showIcon && <ExternalLinkIcon />}
