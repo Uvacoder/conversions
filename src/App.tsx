@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Footer from './components/Layout/Footer';
-import { MainPage } from './pages';
+import MainPage from './pages/homepage/MainPage';
 
 function App() {
   return (

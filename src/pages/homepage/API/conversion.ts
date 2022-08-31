@@ -1,4 +1,4 @@
-import makeRequest from './makeRequest';
+import makeRequest from '@API';
 
 const config = {
   url: {
@@ -7,7 +7,7 @@ const config = {
 };
 
 export const getCurrenciesList = () => {
-  return makeRequest({
+  return makeRequest<{ currencies: { [i in string]: string } }>({
     ...config,
     headers: { apikey: import.meta.env.VITE_CURRENCY_API_KEY },
     url: { ...config.url, path: 'list' },
@@ -19,7 +19,7 @@ export const convertFromCurrency = (params: {
   from: string;
   amount: number;
 }) => {
-  return makeRequest({
+  return makeRequest<{ new_amount: number }>({
     url: {
       baseUrl: 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1',
       path: 'convertcurrency',

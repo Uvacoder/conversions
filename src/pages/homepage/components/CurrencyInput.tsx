@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const CurrencyInput = ({
   data: { value },
   handleValueChange,
@@ -19,4 +21,4 @@ const CurrencyInput = ({
   );
 };
 
-export default CurrencyInput;
+export default memo(CurrencyInput);

@@ -1,4 +1,4 @@
-import { ReactComponent as SwapIcon } from '../../assets/swap-horizontal.svg';
+import { ReactComponent as SwapIcon } from '../../../assets/swap-horizontal.svg';
 
 const ICON_SIZE = 20;
 const SwapButton = ({ onSwap }: { onSwap: () => void }) => {

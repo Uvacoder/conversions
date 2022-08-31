@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { convertFromCurrency, getCurrenciesList } from '../../api';
-import { getCountriesToCurrencyMapping } from '../../api/countries';
-import { useDebounce } from '../../hooks';
-import { getCountryFromLocale } from '../../utils';
+import { getCountriesToCurrencyMapping } from '../API/countries';
+import { useDebounce } from '@hooks';
+import { getCountryFromLocale } from '../utils';
+import { convertFromCurrency, getCurrenciesList } from '../API';
 
 export default function useConversionForm() {
   const [currencies, setCurrencies] = useState({});
@@ -73,9 +73,7 @@ export default function useConversionForm() {
       amount: fromValue,
     })
       .then(({ data }) => {
-        setToValue(
-          Number.parseFloat(Number.parseFloat(data.new_amount).toFixed(2))
-        );
+        setToValue(Number.parseFloat(data.new_amount.toFixed(2)));
       })
       .catch((e: AxiosError) => {
         setError(e.message);
