@@ -3,17 +3,19 @@ import Button from '../common/Button';
 import CurrencyInput from './CurrencyInput';
 import SelectCurrency from './SelectCurrency';
 import SwapButton from './SwapButton';
-import { ConversionFormType } from './useConversionForm';
+import useConversionForm, { ConversionFormType } from './useConversionForm';
 
-type currencyType = { value: number; currency: string };
-const ConversionForm = ({
-  swapCurrencies,
-  handleValueChange,
-  handleCurrencyChange,
-  currency: { from, to },
-  onSubmit,
-  options,
-}: ConversionFormType) => {
+const ConversionForm = () => {
+  const {
+    from,
+    to,
+    currencies,
+    handleValueChange,
+    handleCurrencyChange,
+    swapCurrencies,
+    convertCurrencies,
+  } = useConversionForm();
+
   return (
     <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-lg mb-10">
       <div className="flex flex-col gap-2 md:flex-row items-stretch lg:space-between w-full mb-4">
@@ -23,7 +25,7 @@ const ConversionForm = ({
             data={from}
             handleValueChange={handleValueChange}
             handleCurrencyChange={handleCurrencyChange}
-            options={options}
+            options={currencies}
           />
         </div>
         <div className="flex flex-col items-center xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">
@@ -32,7 +34,7 @@ const ConversionForm = ({
             <SelectCurrency
               value={from.currency}
               onChange={handleCurrencyChange}
-              options={options}
+              options={currencies}
               type="from"
             />
           </div>
@@ -42,17 +44,17 @@ const ConversionForm = ({
             <SelectCurrency
               value={to.currency}
               onChange={handleCurrencyChange}
-              options={options}
+              options={currencies}
               type="to"
             />
           </div>
         </div>
       </div>
       {from.value !== 0 && to.value !== 0 ? (
-        <ExchangeRatePanel from={from} to={to} options={options} />
+        <ExchangeRatePanel from={from} to={to} options={currencies} />
       ) : null}
       <ExchangeRateInfoPanel />
-      <Button className="ml-auto" onClick={onSubmit}>
+      <Button className="ml-auto" onClick={convertCurrencies}>
         Конвертировать
       </Button>
     </form>
@@ -70,8 +72,8 @@ const ExchangeRatePanel = ({
   to,
   options,
 }: {
-  from: currencyType;
-  to: currencyType;
+  from: ConversionFormType['currency']['from'];
+  to: ConversionFormType['currency']['to'];
   options: ConversionFormType['options'];
 }) => {
   return (
@@ -95,8 +97,8 @@ const ExchangeRateCurrency = ({
   left,
   right,
 }: {
-  left: currencyType;
-  right: currencyType;
+  left: ConversionFormType['currency']['from'];
+  right: ConversionFormType['currency']['to'];
 }) => {
   return (
     <div className="mr-auto">{`1 ${left.currency} = ${

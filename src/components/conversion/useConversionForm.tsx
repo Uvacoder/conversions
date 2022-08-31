@@ -14,11 +14,13 @@ export default function useConversionForm() {
   const [toCurrency, setToCurrency] = useState('EUR');
 
   useEffect(() => {
+    // Сохранить данные о стране пользователя при загрузке
     function getUserCurrencyData(data: { [i in string]: string }) {
       const locale = window.navigator.language;
       const currency = getCountryFromLocale(locale, data);
       setFromCurrency(currency);
     }
+    // Хеш таблица с отображением стран на валюту
     function getUserCountryCurrency() {
       console.log('fetching countries to currencies list');
       const sessionData = sessionStorage.getItem('countriesToCurrency');
@@ -30,6 +32,7 @@ export default function useConversionForm() {
         getUserCurrencyData(data);
       });
     }
+    // Список валют
     function getCurrencies() {
       console.log('fetching currencies');
       const sessionData = sessionStorage.getItem('currencies');
