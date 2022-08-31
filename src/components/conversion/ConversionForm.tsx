@@ -3,6 +3,7 @@ import Button from '../common/Button';
 import CurrencyInput from './CurrencyInput';
 import SelectCurrency from './SelectCurrency';
 import SwapButton from './SwapButton';
+import { ConversionFormType } from './useConversionForm';
 
 type currencyType = { value: number; currency: string };
 const ConversionForm = ({
@@ -12,17 +13,7 @@ const ConversionForm = ({
   currency: { from, to },
   onSubmit,
   options,
-}: {
-  handleValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCurrencyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  onSubmit: () => void;
-  swapCurrencies: () => void;
-  currency: {
-    from: currencyType;
-    to: currencyType;
-  };
-  options: { [name in string]: string };
-}) => {
+}: ConversionFormType) => {
   return (
     <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-lg">
       <div className="flex flex-col gap-2 md:flex-row items-stretch lg:space-between w-full mb-4">
@@ -51,27 +42,7 @@ const ConversionForm = ({
         </div>
       </div>
       {from.value !== 0 && to.value !== 0 ? (
-        <>
-          <div className="mr-auto font-bold text-stone-500 tracking-wide">{`${formatNumberByCurrency(
-            from.value,
-            from.currency
-          )} ${options[from.currency]} =`}</div>
-
-          <div className="mr-auto text-xl font-bold tracking-wide">{`${formatNumberByCurrency(
-            to.value,
-            to.currency
-          )} ${options[to.currency]}`}</div>
-          <div className="mr-auto -mb-1">{`1 ${from.currency} = ${
-            to.value !== 0 && from.value !== 0
-              ? formatNumber(to.value / from.value)
-              : 'x'
-          } ${to.currency}`}</div>
-          <div className="mr-auto">{`1 ${to.currency} = ${
-            to.value !== 0 && from.value !== 0
-              ? formatNumber(from.value / to.value)
-              : 'x'
-          } ${from.currency}`}</div>
-        </>
+        <ExchangeRatePanel from={from} to={to} options={options} />
       ) : null}
       <ExchangeRateInfoPanel />
       <Button className="ml-auto" onClick={onSubmit}>
@@ -83,9 +54,51 @@ const ConversionForm = ({
 
 export default ConversionForm;
 
+const ExchangeRatePanel = ({
+  from,
+  to,
+  options,
+}: {
+  from: currencyType;
+  to: currencyType;
+  options: ConversionFormType['options'];
+}) => {
+  return (
+    <>
+      <div className="mr-auto font-bold text-stone-500 tracking-wide">{`${formatNumberByCurrency(
+        from.value,
+        from.currency
+      )} ${options[from.currency]} =`}</div>
+
+      <div className="mr-auto text-xl font-bold tracking-wide">{`${formatNumberByCurrency(
+        to.value,
+        to.currency
+      )} ${options[to.currency]}`}</div>
+      <ExchangeRateCurrency left={from} right={to} />
+      <ExchangeRateCurrency left={to} right={from} />
+    </>
+  );
+};
+
+const ExchangeRateCurrency = ({
+  left,
+  right,
+}: {
+  left: currencyType;
+  right: currencyType;
+}) => {
+  return (
+    <div className="mr-auto">{`1 ${left.currency} = ${
+      left.value !== 0 && right.value !== 0
+        ? formatNumber(right.value / left.value)
+        : 'x'
+    } ${right.currency}`}</div>
+  );
+};
+
 const ExchangeRateInfoPanel = () => {
   return (
-    <div className="mr-auto bg-blue-50 px-4 py-1 text-sm rounded-lg">
+    <div className="mr-auto bg-blue-50 px-4 py-2 text-sm rounded-lg">
       Актуальный курс валют от Банка России вы можете{' '}
       <a
         className="text-blue-700"

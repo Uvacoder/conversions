@@ -1,8 +1,5 @@
-import { response_test } from './api/temp';
 import ConversionForm from './components/conversion/ConversionForm';
 import useConversionForm from './components/conversion/useConversionForm';
-
-const RESPONSE = response_test;
 
 function App() {
   const {
@@ -17,8 +14,8 @@ function App() {
 
   return (
     <div className="flex flex-col h-full min-h-screen">
-      <div className="container mx-auto pt-4 sm:pt-10 flex flex-col gap-4 max-w-[900px] px-2">
-        <h1 className="sm:text-3xl text-2xl text-center text-white">
+      <div className="container mx-auto pt-4 xs:pt-10 flex flex-col gap-4 max-w-[900px] px-2">
+        <h1 className="xs:text-3xl text-2xl text-center text-white">
           Конвертация валюты
         </h1>
         <div className="text-center text-stone-200">

@@ -53,13 +53,13 @@ export default function useConversionForm() {
 
   const convertCurrencies = () => {
     if (fromValue === 0) return;
-    // return convertFromCurrency({
-    //   to: toCurrency,
-    //   from: fromCurrency,
-    //   amount: fromValue,
-    // }).then(({ data }) => {
-    //   setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
-    // });
+    return convertFromCurrency({
+      to: toCurrency,
+      from: fromCurrency,
+      amount: fromValue,
+    }).then(({ data }) => {
+      setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
+    });
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,3 +98,16 @@ export default function useConversionForm() {
     to: { value: toValue, currency: toCurrency },
   };
 }
+
+type currencyType = { value: number; currency: string };
+export type ConversionFormType = {
+  handleValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCurrencyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onSubmit: () => void;
+  swapCurrencies: () => void;
+  currency: {
+    from: currencyType;
+    to: currencyType;
+  };
+  options: { [name in string]: string };
+};

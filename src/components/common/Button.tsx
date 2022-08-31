@@ -13,7 +13,7 @@ export default function Button({
         e.preventDefault();
         onClick && onClick();
       }}
-      className={`bg-blue-600 px-4 py-2 rounded-[10px] tracking-wider text-white ${className}`}
+      className={`bg-blue-600 px-4 py-2 rounded-md text-white ${className}`}
     >
       {children}
     </button>
