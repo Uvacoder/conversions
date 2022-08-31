@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { convertFromCurrency, getCurrenciesList } from '../../api';
 import { getCountriesToCurrencyMapping } from '../../api/countries';
@@ -6,6 +7,8 @@ import { getCountryFromLocale } from '../../utils';
 
 export default function useConversionForm() {
   const [currencies, setCurrencies] = useState({});
+  const [error, setError] = useState('');
+
   const [fromValue, setFromValue] = useState(0);
   const debouncedValue = useDebounce(fromValue);
   const [fromCurrency, setFromCurrency] = useState('RUB');
@@ -27,10 +30,14 @@ export default function useConversionForm() {
       if (sessionData) {
         return getUserCurrencyData(JSON.parse(sessionData));
       }
-      return getCountriesToCurrencyMapping().then(({ data }) => {
-        sessionStorage.setItem('countriesToCurrency', JSON.stringify(data));
-        getUserCurrencyData(data);
-      });
+      return getCountriesToCurrencyMapping()
+        .then(({ data }) => {
+          sessionStorage.setItem('countriesToCurrency', JSON.stringify(data));
+          getUserCurrencyData(data);
+        })
+        .catch((e: AxiosError) => {
+          setError(e.message);
+        });
     }
     // Список валют
     function getCurrencies() {
@@ -39,10 +46,14 @@ export default function useConversionForm() {
       if (sessionData) {
         return setCurrencies(JSON.parse(sessionData));
       }
-      return getCurrenciesList().then(({ data: { currencies } }) => {
-        sessionStorage.setItem('currencies', JSON.stringify(currencies));
-        setCurrencies(currencies);
-      });
+      return getCurrenciesList()
+        .then(({ data: { currencies } }) => {
+          sessionStorage.setItem('currencies', JSON.stringify(currencies));
+          setCurrencies(currencies);
+        })
+        .catch((e: AxiosError) => {
+          setError(e.message);
+        });
     }
     getUserCountryCurrency();
     getCurrencies();
@@ -60,9 +71,15 @@ export default function useConversionForm() {
       to: toCurrency,
       from: fromCurrency,
       amount: fromValue,
-    }).then(({ data }) => {
-      setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
-    });
+    })
+      .then(({ data }) => {
+        setToValue(
+          Number.parseFloat(Number.parseFloat(data.new_amount).toFixed(2))
+        );
+      })
+      .catch((e: AxiosError) => {
+        setError(e.message);
+      });
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {

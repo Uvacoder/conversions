@@ -4,11 +4,14 @@ const config = {
   url: {
     baseUrl: import.meta.env.VITE_CURRENCY_API_URL,
   },
-  headers: { apikey: import.meta.env.VITE_CURRENCY_API_KEY },
 };
 
 export const getCurrenciesList = () => {
-  return makeRequest({ ...config, url: { ...config.url, path: 'list' } });
+  return makeRequest({
+    ...config,
+    headers: { apikey: import.meta.env.VITE_CURRENCY_API_KEY },
+    url: { ...config.url, path: 'list' },
+  });
 };
 
 export const convertFromCurrency = (params: {
@@ -17,8 +20,14 @@ export const convertFromCurrency = (params: {
   amount: number;
 }) => {
   return makeRequest({
-    ...config,
-    url: { ...config.url, path: 'convert' },
-    params,
+    url: {
+      baseUrl: 'https://currency-converter-by-api-ninjas.p.rapidapi.com/v1',
+      path: 'convertcurrency',
+    },
+    headers: {
+      'X-RapidAPI-Key': import.meta.env.VITE_RAPIDAPI_API_KEY,
+      'X-RapidAPI-Host': import.meta.env.VITE_RAPIDAPI_API_NINJAS_HOST,
+    },
+    params: { have: params.from, want: params.to, amount: params.amount },
   });
 };
