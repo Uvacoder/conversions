@@ -10,7 +10,7 @@ export default function useConversionForm() {
   const debouncedValue = useDebounce(fromValue);
   const [fromCurrency, setFromCurrency] = useState('RUB');
 
-  const [toValue, setToValue] = useState(0);
+  const [toValue, setToValue] = useState(5000);
   const [toCurrency, setToCurrency] = useState('EUR');
 
   useEffect(() => {
@@ -34,11 +34,13 @@ export default function useConversionForm() {
   }, []);
 
   useEffect(() => {
+    if (debouncedValue === 0) return;
     console.log('converting currencies - debounced');
-    // convertCurrencies()
+    convertCurrencies();
   }, [debouncedValue]);
 
   const convertCurrencies = () => {
+    if (toValue === 0) return;
     console.log('converting currencies');
     // return convertFromCurrency({
     //   to: toCurrency,
@@ -70,11 +72,10 @@ export default function useConversionForm() {
   };
 
   const swapCurrencies = () => {
-    const from = { fromValue, fromCurrency };
-    setFromValue(toValue);
+    const from = { fromCurrency };
     setFromCurrency(toCurrency);
     setToCurrency(from.fromCurrency);
-    setToValue(toValue !== 0 ? from.fromValue : 0);
+    convertCurrencies();
   };
 
   return {

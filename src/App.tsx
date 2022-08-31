@@ -16,25 +16,20 @@ function App() {
 
   return (
     <div className="container mx-auto py-4 sm:py-10 flex flex-col gap-4 max-w-[900px] px-2">
-      <h1 className="text-3xl text-center text-indigo-100">
+      <h1 className="sm:text-3xl text-2xl text-center text-white tracking-wider">
         Конвертация валюты
       </h1>
-      <div className="flex flex-col bg-white px-4 py-6 rounded-lg gap-4">
-        <ConversionForm
-          swapCurrencies={swapCurrencies}
-          handleValueChange={handleValueChange}
-          handleCurrencyChange={handleCurrencyChange}
-          currency={{
-            from,
-            to,
-          }}
-          onSubmit={convertCurrencies}
-          options={RESPONSE.currencies}
-        />
-        <div className="mx-auto">{`1 ${from.currency} = ${
-          to.value !== 0 ? (to.value / from.value).toFixed(2) : 'x'
-        } ${to.currency}`}</div>
-      </div>
+      <ConversionForm
+        swapCurrencies={swapCurrencies}
+        handleValueChange={handleValueChange}
+        handleCurrencyChange={handleCurrencyChange}
+        currency={{
+          from,
+          to,
+        }}
+        onSubmit={convertCurrencies}
+        options={RESPONSE.currencies}
+      />
     </div>
   );
 }

@@ -11,3 +11,12 @@ export const getCountryFromLocale = (
   }
   return 'RUB';
 };
+
+export const formatNumberByCurrency = (number: number, currency: string) => {
+  const outputOptions = { style: 'currency', currency };
+  const numberFormat = new Intl.NumberFormat(
+    window.navigator.language,
+    outputOptions
+  );
+  return numberFormat.format(number);
+};

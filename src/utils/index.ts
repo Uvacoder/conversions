@@ -1,1 +1,1 @@
-export { getCountryFromLocale } from './currencies';
+export { getCountryFromLocale, formatNumberByCurrency } from './currencies';
