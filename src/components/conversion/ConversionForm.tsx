@@ -15,9 +15,10 @@ const ConversionForm = ({
   options,
 }: ConversionFormType) => {
   return (
-    <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-lg">
+    <form className="flex flex-col bg-white px-4 sm:px-10 py-8 rounded-lg items-center gap-2 shadow-lg mb-10">
       <div className="flex flex-col gap-2 md:flex-row items-stretch lg:space-between w-full mb-4">
         <div className="w-full md:max-w-[30%]">
+          <InputTitle>Сумма</InputTitle>
           <CurrencyInput
             data={from}
             handleValueChange={handleValueChange}
@@ -26,19 +27,25 @@ const ConversionForm = ({
           />
         </div>
         <div className="flex flex-col items-center xs:items-stretch xs:flex-row w-full md:max-w-[70%] gap-2">
-          <SelectCurrency
-            value={from.currency}
-            onChange={handleCurrencyChange}
-            options={options}
-            type="from"
-          />
+          <div>
+            <InputTitle>Из</InputTitle>
+            <SelectCurrency
+              value={from.currency}
+              onChange={handleCurrencyChange}
+              options={options}
+              type="from"
+            />
+          </div>
           <SwapButton onSwap={swapCurrencies} />
-          <SelectCurrency
-            value={to.currency}
-            onChange={handleCurrencyChange}
-            options={options}
-            type="to"
-          />
+          <div>
+            <InputTitle>В</InputTitle>
+            <SelectCurrency
+              value={to.currency}
+              onChange={handleCurrencyChange}
+              options={options}
+              type="to"
+            />
+          </div>
         </div>
       </div>
       {from.value !== 0 && to.value !== 0 ? (
@@ -53,6 +60,10 @@ const ConversionForm = ({
 };
 
 export default ConversionForm;
+
+const InputTitle = ({ children }: { children: React.ReactNode }) => {
+  return <div className="font-bold mb-1 ml-2">{children}</div>;
+};
 
 const ExchangeRatePanel = ({
   from,
