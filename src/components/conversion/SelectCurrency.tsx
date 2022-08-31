@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const SelectCurrency = ({
   value,
   onChange,
@@ -23,4 +25,4 @@ const SelectCurrency = ({
   );
 };
 
-export default SelectCurrency;
+export default memo(SelectCurrency);

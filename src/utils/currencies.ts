@@ -29,7 +29,7 @@ export const formatNumberByCurrency = (number: number, currency: string) => {
 export const formatNumber = (number: number) => {
   const outputOptions = {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 3,
   };
   const numberFormat = new Intl.NumberFormat(
     window.navigator.language,

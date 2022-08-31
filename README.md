@@ -34,6 +34,8 @@ npm run dev
 
 - Валюта вычисляется из локали браузера
 
-- используемый API:
+- Для предотвращения нескольких одновременных запросов при введении суммы для конвертации, использую свой useDebouncer хук
+
+- Используемый API:
   - https://apilayer.com/marketplace/currency_data-api,
   - https://rapidapi.com/apininjas/api/currency-converter-by-api-ninjas/
