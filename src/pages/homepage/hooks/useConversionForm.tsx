@@ -53,7 +53,7 @@ export default function useConversionForm() {
               response: { fiats },
             },
           }) => {
-            sessionStorage.setItem('currencies', JSON.stringify({}));
+            sessionStorage.setItem('currencies', JSON.stringify(fiats));
             setCurrencies(fiats);
           }
         )
