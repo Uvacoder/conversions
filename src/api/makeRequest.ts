@@ -1,18 +1,22 @@
-import axios from 'axios';
+import axios, { AxiosRequestHeaders } from 'axios';
 
 export default ({
-  url = '/',
+  url = { baseUrl: '/', path: '/', useCORS: false },
   method = 'GET',
   params,
+  headers,
 }: {
-  url: string;
+  url: { baseUrl: string; path: string; useCORS?: boolean };
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   params?: Object;
+  headers?: AxiosRequestHeaders;
 }) => {
   return axios({
-    url: `${import.meta.env.VITE_API_URL}/${url}`,
+    url: `${url.useCORS ? 'https://cors.eu.org/' : ''}${url.baseUrl}/${
+      url.path
+    }`,
     params,
     method,
-    headers: { apikey: import.meta.env.VITE_API_KEY },
+    headers,
   });
 };

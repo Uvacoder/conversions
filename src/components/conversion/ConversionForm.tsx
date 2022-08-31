@@ -23,7 +23,7 @@ const ConversionForm = ({
 }) => {
   return (
     <form className="flex flex-col items-center gap-4">
-      <div className="flex items-center space-between w-full">
+      <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center lg:space-between w-full">
         <CurrencyForm
           data={currency.from}
           handleValueChange={handleValueChange}

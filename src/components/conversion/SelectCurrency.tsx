@@ -12,7 +12,8 @@ const SelectCurrency = ({
   return (
     <select
       value={value}
-      className="absolute right-[15px] max-w-[150px] p-2 border border-stone-700 rounded-lg"
+      className="md:absolute md:right-[15px] mt-1 mb-3 md:my-0 w-full max-w-[250px]
+      md:max-w-[150px] p-2 border border-stone-700 rounded-lg"
       onChange={onChange}
       name={name}
     >

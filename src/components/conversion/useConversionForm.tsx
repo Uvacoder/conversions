@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { convertFromCurrency } from '../../api';
+import { getCountriesToCurrencyMapping } from '../../api/countries';
 import useDebounce from '../../hooks/useDebounce';
 
 export default function useConversionForm() {
@@ -13,9 +14,10 @@ export default function useConversionForm() {
 
   useEffect(() => {
     console.log('fetching currencies list');
-    // getCurrenciesList().then(({ data: { currencies } }) =>
-    //   setCurrencies(currencies)
-    // );
+    getCountriesToCurrencyMapping().then(({ data }) => {
+      console.log(data);
+      // setCurrencies(currencies);
+    });
   }, []);
 
   useEffect(() => {
@@ -24,20 +26,21 @@ export default function useConversionForm() {
   }, [debouncedValue]);
 
   const convertCurrencies = () => {
-    return convertFromCurrency({
-      to: toCurrency,
-      from: fromCurrency,
-      amount: fromValue,
-    }).then(({ data }) => {
-      setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
-    });
+    console.log('converting currencies');
+    // return convertFromCurrency({
+    //   to: toCurrency,
+    //   from: fromCurrency,
+    //   amount: fromValue,
+    // }).then(({ data }) => {
+    //   setToValue(Number.parseFloat(Number.parseFloat(data.result).toFixed(2)));
+    // });
   };
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     try {
       const numberValue =
-        value === ''
+        value === '' || Number.isNaN(value)
           ? 0
           : Number.parseFloat(Number.parseFloat(value).toFixed(2));
       return setFromValue(numberValue);
