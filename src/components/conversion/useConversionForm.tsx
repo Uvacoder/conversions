@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { convertFromCurrency } from '../../api';
 import { getCountriesToCurrencyMapping } from '../../api/countries';
-import useDebounce from '../../hooks/useDebounce';
+import { useDebounce } from '../../hooks';
 import { getCountryFromLocale } from '../../utils';
 
 export default function useConversionForm() {

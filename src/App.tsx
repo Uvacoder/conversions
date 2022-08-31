@@ -15,9 +15,11 @@ function App() {
   } = useConversionForm();
 
   return (
-    <div className="container mx-auto py-2 sm:py-10 flex flex-col gap-4 max-w-[900px] px-2">
-      <h1 className="text-3xl text-center">Конвертация валюты</h1>
-      <div className="flex flex-col bg-stone-800 px-4 py-6 rounded-lg gap-4">
+    <div className="container mx-auto py-4 sm:py-10 flex flex-col gap-4 max-w-[900px] px-2">
+      <h1 className="text-3xl text-center text-indigo-100">
+        Конвертация валюты
+      </h1>
+      <div className="flex flex-col bg-white px-4 py-6 rounded-lg gap-4">
         <ConversionForm
           swapCurrencies={swapCurrencies}
           handleValueChange={handleValueChange}

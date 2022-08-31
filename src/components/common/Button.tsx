@@ -13,7 +13,7 @@ export default function Button({
         e.preventDefault();
         onClick && onClick();
       }}
-      className={`bg-emerald-600 px-4 py-2 rounded-lg text-xl ${className}`}
+      className={`bg-indigo-600 px-4 py-2 rounded-[10px] text-xl text-indigo-100 ${className}`}
     >
       {children}
     </button>

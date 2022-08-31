@@ -5,12 +5,12 @@
 
 :root {
   font-family: 'Open Sans', sans-serif;
-  @apply bg-stone-900 text-stone-100;
+  @apply bg-gradient-to-r from-indigo-900 to-cyan-800 text-stone-900;
 }
 
 select,
 input {
-  @apply bg-black;
+  @apply bg-white;
 }
 
 .currency-input {
