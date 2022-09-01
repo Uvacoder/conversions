@@ -6,7 +6,7 @@ const config = {
   },
 };
 
-type CurrenciesListType = {
+export type CurrenciesListType = {
   response: { fiats: { [i in string]: { currency_name: string } } };
 };
 export const getCurrenciesList = () => {

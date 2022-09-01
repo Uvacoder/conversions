@@ -20,7 +20,7 @@ export default function useConversionForm() {
   const [toValue, setToValue] = useState(0);
   const [toCurrency, setToCurrency] = useState('EUR');
 
-  const ref = useRef<HTMLInputElement>(null);
+  const _ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Сохранить данные о стране пользователя при загрузке
@@ -65,7 +65,7 @@ export default function useConversionForm() {
         .catch((e: AxiosError) => setError(e.message))
         .finally(() => setIsLoading(false));
     }
-    ref.current?.focus();
+    _ref.current?.focus();
     getUserCountryCurrency();
     getCurrencies();
   }, []);
@@ -132,7 +132,7 @@ export default function useConversionForm() {
     from: { value: fromValue, currency: fromCurrency },
     to: { value: toValue, currency: toCurrency },
     isLoading,
-    ref,
+    _ref,
   };
 }
 
