@@ -1,9 +1,10 @@
-import { AxiosError } from 'axios';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getCountriesToCurrencyMapping } from '../API/countries';
+import { AxiosError } from 'axios';
+
 import { useDebounce } from '@hooks';
 import { getCountryFromLocale } from '../utils';
 import { convertFromCurrency, getCurrenciesList } from '../API';
+import { getCountriesToCurrencyMapping } from '../API/countries';
 
 export default function useConversionForm() {
   const [currencies, setCurrencies] = useState({});
@@ -133,18 +134,4 @@ export default function useConversionForm() {
   };
 }
 
-type currencyType = { value: number; currency: string };
-export type ConversionFormType = {
-  handleValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleCurrencyChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  onSubmit: () => void;
-  error: string;
-  swapCurrencies: () => void;
-  currency: {
-    from: currencyType;
-    to: currencyType;
-  };
-  ref: React.RefObject<HTMLInputElement>;
-  isLoading: boolean;
-  options: { [name in string]: { currency_name: string } };
-};
+export type ConversionFormType = typeof useConversionForm;

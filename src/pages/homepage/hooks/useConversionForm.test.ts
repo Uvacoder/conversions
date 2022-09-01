@@ -2,32 +2,24 @@ import { renderHook } from '@testing-library/react-hooks';
 import useConversionForm from './useConversionForm';
 
 const fiats = {
-  RU: 'USD',
-  EUR: 'EU',
+  RU: 'RUB',
+  EN: 'USD',
 };
-const mockFn = async () =>
-  await Promise.resolve({
-    data: {
-      response: {
-        fiats,
-      },
+const mockResponse = {
+  data: {
+    response: {
+      fiats,
     },
-  });
+  },
+};
+const mockFn = async () => await Promise.resolve(mockResponse);
 
 jest.mock('../API/countries.ts', () => ({
-  getCountriesToCurrencyMapping: async () =>
-    await Promise.resolve({ RU: 'RUB', EU: 'EUR' }),
+  getCountriesToCurrencyMapping: async () => await Promise.resolve(fiats),
 }));
 jest.mock('../API/conversion.ts', () => ({
   convertFromCurrency: async () => await mockFn(),
-  getCurrenciesList: async () =>
-    await Promise.resolve({
-      data: {
-        response: {
-          fiats,
-        },
-      },
-    }),
+  getCurrenciesList: async () => await mockFn(),
 }));
 
 describe('useConversionForm Hook', () => {
