@@ -7,7 +7,9 @@ import { convertFromCurrency, getCurrenciesList } from '../API';
 import { getCountriesToCurrencyMapping } from '../API/countries';
 
 export default function useConversionForm() {
-  const [currencies, setCurrencies] = useState({});
+  const [currencies, setCurrencies] = useState<{
+    [i in string]: { currency_name: string };
+  }>({});
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -134,4 +136,4 @@ export default function useConversionForm() {
   };
 }
 
-export type ConversionFormType = typeof useConversionForm;
+export type ConversionFormType = ReturnType<typeof useConversionForm>;

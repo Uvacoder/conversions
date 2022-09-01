@@ -96,9 +96,9 @@ const ExchangeRatePanel = ({
   to,
   options,
 }: {
-  from: ConversionFormType['currency']['from'];
-  to: ConversionFormType['currency']['to'];
-  options: ConversionFormType['options'];
+  from: ConversionFormType['from'];
+  to: ConversionFormType['to'];
+  options: ConversionFormType['currencies'];
 }) => {
   return (
     <>
@@ -120,8 +120,8 @@ const ExchangeRateCurrency = ({
   left,
   right,
 }: {
-  left: ConversionFormType['currency']['from'];
-  right: ConversionFormType['currency']['to'];
+  left: ConversionFormType['from'];
+  right: ConversionFormType['to'];
 }) => {
   return (
     <div className="mr-auto">{`1 ${left.currency} = ${
