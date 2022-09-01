@@ -36,7 +36,7 @@ npm run dev
 
 - React Router
 
-- Jest/RTL/RHTL
+- Jest/RTL/RTL-Hooks
 
 - Vite - _Как сборщик для быстрой разработки, но также в других проектах использовал Webpack_
 
@@ -51,6 +51,8 @@ npm run dev
 - Валюта вычисляется из локали браузера
 
 - Для предотвращения нескольких одновременных запросов при введении суммы для конвертации, использую свой useDebouncer хук
+
+- Базовые тесты с Jest, RTL, RTL-Hooks
 
 - Используемый API:
   - https://apilayer.com/marketplace/currency_data-api,
